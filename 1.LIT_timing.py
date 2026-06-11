@@ -4,6 +4,8 @@ import re
 
 tehran = ZoneInfo("Asia/Tehran")
 utc    = ZoneInfo("UTC")
+# Instruments that open later for Asia session
+LATE_ASIA_OPEN_SYMBOLS = {'XAUUSD', 'XAGUSD', 'NAS100USD', 'US30USD'}
 
 def is_uk_dst(dt):
     """Last Sunday of March → last Sunday of October"""
@@ -37,7 +39,7 @@ def is_us_dst(dt):
     first_sun_november = sundays_november[0]
     return second_sun_march <= dt < first_sun_november
 
-def get_session_opens(dt):
+def get_session_opens(dt, late_asia):
     """
     Returns the 4 session open times (UTC) for a given date.
 
@@ -62,12 +64,12 @@ def get_session_opens(dt):
 
     london_open = 7  if uk_dst else 8
     ny_open     = 12 if us_dst else 13
-    asia_open   = 21 if us_dst else 22
+    asia_open   = (22 if us_dst else 23) if late_asia else (21 if us_dst else 22)
     asia_close  = 5  if us_dst else 6
 
     return london_open, ny_open, asia_open, asia_close
 
-def label_session(row):
+def label_session(row, late_asia=False):
     """
     Labels a candle with its session based on datetime_utc.
     Each session open is a single 1-hour candle.
@@ -76,7 +78,7 @@ def label_session(row):
     dt   = row['datetime_utc']
     hour = dt.hour
 
-    london_open, ny_open, asia_open, asia_close = get_session_opens(dt)
+    london_open, ny_open, asia_open, asia_close = get_session_opens(dt, late_asia=late_asia)
 
     if hour == london_open:
         return 'london_open'
@@ -108,12 +110,13 @@ def make_data(path):
     data = data[['datetime_utc', 'datetime_iran', 'open', 'high', 'low', 'close']]
     # data.set_index('datetime_utc', inplace=True)
 
-    # Apply to dataframe
-    data['session'] = data.apply(label_session, axis=1)
-
     pair = re.search(r'([A-Z0-9]+)_([A-Z]+)', path)
-    # print(pair, path)
     f_name = pair.group(1) + pair.group(2)  # 'EURUSD'
+    late_asia = f_name in LATE_ASIA_OPEN_SYMBOLS
+    
+    # Apply to dataframe
+    data['session'] = data.apply(label_session, axis=1, late_asia=late_asia)
+
     f_name = f"{f_name}_with_timing"
     data.to_csv(f'data/{f_name}.csv', index=False)
     print(f_name, 'successfully maked!')
