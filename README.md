@@ -1,16 +1,16 @@
 # LIT Timing Indicator
 
-A Python tool that prepares 1-hour OHLCV data for LIT (Leave In Trade) strategy analysis by automatically converting Iran Standard Time (UTC+3:30) to UTC and labeling each candle with its corresponding trading session.
+A Python tool that prepares 1-hour OHLCV data by adding "LIT Timing Indicator" that exists on tradingview. according to my tz it automatically converts Iran Standard Time (UTC+3:30) to UTC and labels 4 candles for every day as "asia open candle", "asia close candle", "london open candle", and "Ny open candle".
 
 ## What is LIT?
 
-LIT is a price action trading strategy (similar to RTM) that relies heavily on session timing — knowing exactly when London, New York, and Asia sessions open and close is critical for identifying valid setups. This tool is the data preparation layer for applying LIT on historical data.
+LIT (Liquidity Inducement Trading) is a price action trading strategy that relies heavily on session timing — knowing exactly when London, New York, and Asia sessions open and close is critical for identifying valid setups. This tool is the data preparation layer for applying LIT-timing indicator on historical data.
 
 ## What this tool does
 
 - Takes raw 1H OHLCV CSV files exported in **Iran timezone (UTC+3:30)**
 - Handles **daylight saving time correctly** — UK DST and US DST are calculated independently, so session boundaries shift accurately twice a year
-- Labels each candle with one of four session markers:
+- Labels 4 candles of a day with one of four session markers:
 
 | Label | Session | Winter UTC | Summer UTC |
 |---|---|---|---|
@@ -19,11 +19,7 @@ LIT is a price action trading strategy (similar to RTM) that relies heavily on s
 | `asia_open` | Asia open | 22:00 | 21:00 |
 | `asia_close` | Asia close | 06:00 | 05:00 |
 
-Candles that don't fall on a session open/close get `None` — keeping your dataset clean for filtering.
-
-## Supported pairs
-
-`EURUSD` · `AUDUSD` · `GBPUSD` · `XAUUSD` · `EURGBP` · `NAS100` · `NZDUSD` · `US30` · `USDCAD` · `USDCHF` · `USDJPY` · `XAGUSD`
+Rest of candles get `None` — keeping your dataset clean for filtering.
 
 ## Usage
 
