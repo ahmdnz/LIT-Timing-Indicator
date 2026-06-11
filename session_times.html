@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<style>
+  body { font-family: 'Segoe UI', sans-serif; background: #0f1117; color: #e0e0e0; padding: 30px; }
+  h2 { color: #c9a84c; margin-bottom: 4px; }
+  p.sub { color: #888; font-size: 13px; margin-top: 0; margin-bottom: 24px; }
+  table { width: 100%; border-collapse: collapse; font-size: 14px; }
+  th { background: #1e2130; color: #c9a84c; padding: 10px 14px; text-align: left; border-bottom: 2px solid #c9a84c; }
+  th.section-asia { border-top: 2px solid #9c27b0; }
+  th.section-lon  { border-top: 2px solid #4da6ff; }
+  th.section-ny   { border-top: 2px solid #ff7043; }
+  td { padding: 10px 14px; border-bottom: 1px solid #2a2d3a; vertical-align: top; }
+  tr:hover td { background: #1a1d2a; }
+  .period   { font-weight: 600; color: #ffffff; }
+  .dates    { color: #aaa; font-size: 13px; margin-top: 3px; }
+  .rule     { color: #c9a84c; font-size: 12px; margin-top: 4px; }
+  .event    { font-size: 12px; color: #888; margin-top: 3px; }
+  .duration { font-size: 12px; color: #666; margin-top: 3px; }
+  .lon      { color: #4da6ff; font-weight: 600; }
+  .ny       { color: #ff7043; font-weight: 600; }
+  .asia-o   { color: #ce93d8; font-weight: 600; }
+  .asia-c   { color: #ab47bc; font-weight: 600; }
+  .sub-val  { font-size: 12px; color: #888; margin-top: 3px; }
+  .tag { display:inline-block; font-size:11px; padding:2px 7px; border-radius:4px; margin-left:6px; vertical-align:middle; }
+  .tag-both-win { background:#1e3a2f; color:#66bb6a; }
+  .tag-us-dst   { background:#1a2a3a; color:#64b5f6; }
+  .tag-both-dst { background:#2a1a3a; color:#ce93d8; }
+  .arrow { color: #c9a84c; margin: 0 4px; }
+  .col-header-main { font-size: 13px; font-weight: 700; }
+  .col-header-sub  { font-size: 11px; color: #888; font-weight: 400; margin-top: 3px; }
+</style>
+</head>
+<body>
+<h2>Forex Session Times — Annual Cycle</h2>
+<p class="sub">Based on indicator logic: London = 09:00 Berlin local | New York = 08:00 NY local | Asia = 17:00–01:00 NY local</p>
+
+<table>
+  <thead>
+    <tr>
+      <th rowspan="2" style="width:18%">Period</th>
+      <th rowspan="2" style="width:20%">Trigger Event & Rule</th>
+      <!-- Asia -->
+      <th class="section-asia" style="width:11%">
+        <div class="col-header-main">Asia Open</div>
+        <div class="col-header-sub">UTC | NY−relative | hrs before close</div>
+      </th>
+      <th class="section-asia" style="width:11%">
+        <div class="col-header-main">Asia Close</div>
+        <div class="col-header-sub">UTC | NY−relative | candles before NY open</div>
+      </th>
+      <!-- London -->
+      <th class="section-lon" style="width:10%">
+        <div class="col-header-main">London Open</div>
+        <div class="col-header-sub">UTC</div>
+      </th>
+      <!-- NY -->
+      <th class="section-ny" style="width:10%">
+        <div class="col-header-main">NY Open</div>
+        <div class="col-header-sub">UTC</div>
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+
+    <tr>
+      <td>
+        <div class="period">① Both Winter <span class="tag tag-both-win">Both Standard</span></div>
+        <div class="dates">Jan 1 → 2nd Sun of March</div>
+        <div class="duration">~9–10 weeks</div>
+      </td>
+      <td>
+        <div>Start of year — no DST active</div>
+        <div class="event">UK: UTC+0 | Berlin: UTC+1 | NY: UTC−5</div>
+      </td>
+      <!-- Asia Open -->
+      <td class="asia-o">22:00 UTC
+        <div class="sub-val">17:00 NY local</div>
+        <div class="sub-val">8 hrs before close</div>
+      </td>
+      <!-- Asia Close -->
+      <td class="asia-c">06:00 UTC
+        <div class="sub-val">01:00 NY local</div>
+        <div class="sub-val">7 hrs before NY open</div>
+      </td>
+      <td class="lon">08:00 UTC</td>
+      <td class="ny">13:00 UTC</td>
+    </tr>
+
+    <tr>
+      <td>
+        <div class="period">② Only US on DST <span class="tag tag-us-dst">US DST only</span></div>
+        <div class="dates">2nd Sun of March → last Sun of March</div>
+        <div class="duration">~3 weeks (spring gap)</div>
+      </td>
+      <td>
+        <div>🇺🇸 US springs forward</div>
+        <div class="rule">2nd Sunday of March, 02:00 local → 03:00</div>
+        <div class="event">NY: UTC−5 <span class="arrow">→</span> UTC−4</div>
+      </td>
+      <!-- Asia Open -->
+      <td class="asia-o">21:00 UTC
+        <div class="sub-val">17:00 NY local</div>
+        <div class="sub-val">8 hrs before close</div>
+      </td>
+      <!-- Asia Close -->
+      <td class="asia-c">05:00 UTC
+        <div class="sub-val">01:00 NY local</div>
+        <div class="sub-val">7 hrs before NY open</div>
+      </td>
+      <td class="lon">08:00 UTC</td>
+      <td class="ny">12:00 UTC</td>
+    </tr>
+
+    <tr>
+      <td>
+        <div class="period">③ Both on DST <span class="tag tag-both-dst">Both Summer</span></div>
+        <div class="dates">Last Sun of March → last Sun of October</div>
+        <div class="duration">~7 months (longest)</div>
+      </td>
+      <td>
+        <div>🇬🇧 UK/EU springs forward</div>
+        <div class="rule">Last Sunday of March, 01:00 UTC → 02:00 UTC</div>
+        <div class="event">UK: UTC+0 <span class="arrow">→</span> UTC+1 | Berlin: UTC+1 <span class="arrow">→</span> UTC+2</div>
+      </td>
+      <!-- Asia Open -->
+      <td class="asia-o">21:00 UTC
+        <div class="sub-val">17:00 NY local</div>
+        <div class="sub-val">8 hrs before close</div>
+      </td>
+      <!-- Asia Close -->
+      <td class="asia-c">05:00 UTC
+        <div class="sub-val">01:00 NY local</div>
+        <div class="sub-val">7 hrs before NY open</div>
+      </td>
+      <td class="lon">07:00 UTC</td>
+      <td class="ny">12:00 UTC</td>
+    </tr>
+
+    <tr>
+      <td>
+        <div class="period">④ Only US on DST <span class="tag tag-us-dst">US DST only</span></div>
+        <div class="dates">Last Sun of October → 1st Sun of November</div>
+        <div class="duration">~1 week (autumn gap)</div>
+      </td>
+      <td>
+        <div>🇬🇧 UK/EU falls back</div>
+        <div class="rule">Last Sunday of October, 01:00 UTC → 00:00 UTC</div>
+        <div class="event">UK: UTC+1 <span class="arrow">→</span> UTC+0 | Berlin: UTC+2 <span class="arrow">→</span> UTC+1<br>US still on EDT (UTC−4)</div>
+      </td>
+      <!-- Asia Open -->
+      <td class="asia-o">21:00 UTC
+        <div class="sub-val">17:00 NY local</div>
+        <div class="sub-val">8 hrs before close</div>
+      </td>
+      <!-- Asia Close -->
+      <td class="asia-c">05:00 UTC
+        <div class="sub-val">01:00 NY local</div>
+        <div class="sub-val">7 hrs before NY open</div>
+      </td>
+      <td class="lon">08:00 UTC</td>
+      <td class="ny">12:00 UTC</td>
+    </tr>
+
+    <tr>
+      <td>
+        <div class="period">⑤ Both Winter again <span class="tag tag-both-win">Both Standard</span></div>
+        <div class="dates">1st Sun of November → Dec 31</div>
+        <div class="duration">~8 weeks</div>
+      </td>
+      <td>
+        <div>🇺🇸 US falls back</div>
+        <div class="rule">1st Sunday of November, 02:00 local → 01:00</div>
+        <div class="event">NY: UTC−4 <span class="arrow">→</span> UTC−5</div>
+      </td>
+      <!-- Asia Open -->
+      <td class="asia-o">22:00 UTC
+        <div class="sub-val">17:00 NY local</div>
+        <div class="sub-val">8 hrs before close</div>
+      </td>
+      <!-- Asia Close -->
+      <td class="asia-c">06:00 UTC
+        <div class="sub-val">01:00 NY local</div>
+        <div class="sub-val">7 hrs before NY open</div>
+      </td>
+      <td class="lon">08:00 UTC</td>
+      <td class="ny">13:00 UTC</td>
+    </tr>
+
+  </tbody>
+</table>
+</body>
+</html>
