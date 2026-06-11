@@ -119,7 +119,7 @@ def make_data(path):
 
     f_name = f"{f_name}_with_timing"
     data.to_csv(f'data/{f_name}.csv', index=False)
-    print(f_name, 'successfully maked!')
+    print(f_name, 'successfully made!')
 
 
 
